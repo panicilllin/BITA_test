@@ -1,20 +1,57 @@
 ###
 # config file for the project
 ###
+import sqlalchemy as sa
 
 input_conf = {
-    "engine": "Pandas",
+    "engine": "dask",  ## ["pandas", "dask"]
     "zip_path": "Stock.zip",
     "file_path": "Stock.CSV",
-    "batch": 1e6
 }
 
-
-output_conf = {
+db_conf = {
     "engine": "Postgres",
     "Server": "localhost",
-    "Database": "postgres",
+    "Database": "test",
     "Port": 5436,
     "Username": "postgres",
-    "Password": ""
+    "Password": "0114"
+}
+
+# below here is the config for other kinds of CSVs
+# I don't want to write hard code, so I leave the config here
+# if you are going to upload CSV in other format, add seperator and dtype info here
+
+csv_conf = {
+    "Stock.CSV": {
+        "table_name": 'stock',
+        "file_path": 'Stock.CSV',
+        "batch": 1e6,
+        "sep": ';',
+        "dtype": {'PointOfSale': str,
+                  'Product': str,
+                  'Date': str,
+                  'Stock': int
+                  },
+        "pg_type": {
+            "PointOfSale": "CHAR(50)",
+            "Product": "CHAR(50)",
+            "Date": "DATE",
+            "Stock": "INT"
+        },
+        "sa_dtype": {'PointOfSale': sa.types.String,
+                     'Product': sa.types.String,
+                     'Date': sa.types.String,
+                     'Stock': sa.types.Integer}
+    },
+    "demo.CSV": {
+        "table_name": 'demo',
+        'file_path': 'demo.CSV',
+        "sep": ';',
+        "dtype": {'PointOfSale': str,
+                  'Product': str,
+                  'Date': str,
+                  'Stock': int
+                  }
+    }
 }

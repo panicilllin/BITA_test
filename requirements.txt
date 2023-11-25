@@ -1,2 +1,4 @@
+dask>=2023.5.0
 pandas>=2.0.3
 psycopg2_binary>=2.9.3
+SQLAlchemy>=2.0.23
