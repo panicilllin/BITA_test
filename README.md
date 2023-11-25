@@ -69,11 +69,8 @@ using dask as another way of uploading engine, dask cause 60% less time than pan
 
 change the way to Transfer parameters, to avoid hard code.
 
+### Ver 2.5
 
-## TODO
-
-add multi threads upload
-
-add test case
+add test case for the whole program
 
 

@@ -15,7 +15,7 @@ db_conf = {
     "Database": "test",
     "Port": 5436,
     "Username": "postgres",
-    "Password": "0114"
+    "Password": ""
 }
 
 # below here is the config for other kinds of CSVs
@@ -44,14 +44,25 @@ csv_conf = {
                      'Date': sa.types.String,
                      'Stock': sa.types.Integer}
     },
-    "demo.CSV": {
-        "table_name": 'demo',
-        'file_path': 'demo.CSV',
-        "sep": ';',
+    "test_case.CSV": {
+        "table_name": 'test_case',
+        'file_path': 'test_case.CSV',
+        "batch": 1e6,
+        "sep": '; ',
         "dtype": {'PointOfSale': str,
                   'Product': str,
                   'Date': str,
                   'Stock': int
-                  }
+                  },
+        "pg_type": {
+                    "PointOfSale": "CHAR(50)",
+                    "Product": "CHAR(50)",
+                    "Date": "DATE",
+                    "Stock": "INT"
+                },
+        "sa_dtype": {'PointOfSale': sa.types.String,
+                     'Product': sa.types.String,
+                     'Date': sa.types.String,
+                     'Stock': sa.types.Integer}
     }
 }

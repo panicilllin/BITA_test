@@ -97,7 +97,7 @@ class BaseEngine:
                 cursor.close()
                 return True
         except Exception as e:
-            logger.info(e)
+            logger.error(e)
             return False
 
     def load_csv(self):
@@ -120,9 +120,10 @@ class UploaderPD(BaseEngine):
         self.csv_sep = self.csv_conf['sep']
         self.csv_dtype = self.csv_conf['dtype']
 
-    def load_csv(self, csv_file: str = None, csv_conf={}) -> Generator:
+    def load_csv(self, csv_file: str = None, csv_conf: dict = {}, chunksize: int = 1e6) -> Generator:
         """
         load csv to pandas from disk by chunk
+        :param chunksize: chunksize of pd.read_csv()
         :param csv_file: csv file path
         :param csv_conf: dict contain dtype and seperator of the csv
         :return: return a generator, you can useing for loop to read each chunk
@@ -138,7 +139,7 @@ class UploaderPD(BaseEngine):
         if self.csv_conf.get('dtype'):
             read_conf['dtype'] = self.csv_conf['dtype']
         logger.debug(f"batch_size={self.batch_size}")
-        for chunk in pd.read_csv(csv_file, chunksize=self.batch_size, **read_conf):
+        for chunk in pd.read_csv(csv_file, chunksize=chunksize, **read_conf):
             yield chunk
 
     def upload(self, chunk: Generator, table_name: str, table_col: dict) -> bool:
@@ -214,7 +215,7 @@ class UploaderPD(BaseEngine):
         table_name = self.csv_conf.get('table_name')
         table_col = self.csv_conf.get('pg_type')
         start_time = time.time()
-        df_iter = self.load_csv(csv_file, self.csv_conf)
+        df_iter = self.load_csv(csv_file, self.csv_conf, self.batch_size)
         result = self.upload(df_iter, table_name, table_col)
         finish_time = time.time()
         logger.info(f"all finished. result: {result}\n"
