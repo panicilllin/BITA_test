@@ -1,9 +1,9 @@
 # Main Path
 import os.path
-import zipfile
 from basic_uploader import *
 import config
 import logging
+from utils import unzip_file
 
 # set log config
 logger = logging.getLogger(__name__)
@@ -17,16 +17,6 @@ console.setLevel(logging.INFO)
 console_format = logging.Formatter('%(asctime)s %(name)s[line:%(lineno)d] %(levelname)s: %(message)s')
 console.setFormatter(console_format)
 logging.getLogger().addHandler(console)
-
-
-def unzip_file() -> None:
-    zip_path = config.input_conf.get('zip_path', None)
-    if not os.path.exists(zip_path):
-        # download_file()
-        logger.error(f"can't find zip file from given path {zip_path}")
-        return
-    with zipfile.ZipFile(zip_path, 'r') as zip_ref:
-        zip_ref.extractall('./')
 
 
 def upload_stock():
@@ -51,6 +41,6 @@ def upload_stock():
 
 
 if __name__ == '__main__':
-    unzip_file()
+    unzip_file(config.input_conf.get('zip_path', None))
     upload_stock()
 

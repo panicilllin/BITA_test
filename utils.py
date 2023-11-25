@@ -1,10 +1,22 @@
+import os
 import traceback
 import functools
+import zipfile
 from typing import *
 import time
 import logging
 
 logger = logging.getLogger(__name__)
+
+
+def unzip_file(zip_path) -> None:
+
+    if not os.path.exists(zip_path):
+        # download_file()
+        logger.error(f"can't find zip file from given path {zip_path}")
+        return
+    with zipfile.ZipFile(zip_path, 'r') as zip_ref:
+        zip_ref.extractall('./')
 
 
 class Retry:
