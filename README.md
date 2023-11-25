@@ -26,6 +26,9 @@ file struct:
 
 - config.py           I put all the config params here.
 - basic_uploader.py   The file contain most of my code.
+  - BaseEngine        parent class for all upload class in this file
+  - UploaderPD        read and upload CSV using Pandas
+  - UploaderDASK      read and upload CSV using Dask
 - main.py             Entry of the whole program.
 - utils.py            tool box to store some functions are not just for file upload.
 - test_basic_uploader.py  test file for the whole project.
