@@ -58,15 +58,7 @@ class BaseEngine:
             logger.info(e)
             return False
 
-    def creat_table_demo(self, table_name: str, cols: list):
-        sql_creat_table = f"CREATE TABLE {table_name}("
-        for key, val in cols.items():
-            sql_creat_table += f"{key} {val}"
-            sql_creat_table += ", "
-        sql_creat_table = sql_creat_table[:-2] + ")"
-        return sql_creat_table
-
-    def creat_table(self, table_name: str, cols: list) -> bool:
+    def creat_table(self, table_name: str, cols: dict) -> bool:
         """
         create postgres table
         drop table before create it
